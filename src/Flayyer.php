@@ -38,14 +38,14 @@ final class Flayyer
     $template,
     $version = null,
     $extension = "jpeg",
-    $variables = null
+    $variables = []
   ) {
     $this->tenant = $tenant;
     $this->deck = $deck;
     $this->template = $template;
     $this->version = $version;
     $this->extension = $extension;
-    $this->variables = $variables ?? (object)[];
+    $this->variables = $variables;
   }
 
   /**
@@ -63,7 +63,11 @@ final class Flayyer
   public function querystring()
   {
     $defaults = ["__v" => round(microtime(true))];
-    return Flayyer::toQuery(array_merge($defaults, $this->variables));
+    if (is_null($this->variables)) {
+      return Flayyer::toQuery($defaults);
+    } else {
+      return Flayyer::toQuery(array_merge($defaults, $this->variables));
+    }
   }
 
   /**

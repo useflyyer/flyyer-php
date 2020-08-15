@@ -23,6 +23,9 @@ final class FlayyerTest extends TestCase
   public function testEncodesURL(): void
   {
     $flayyer = new Flayyer("tenant", "deck", "template");
+    $href = $flayyer->href();
+    $this->assertStringStartsWith("https://flayyer.host/v2/tenant/deck/template.jpeg?__v=", $href);
+
     $flayyer->variables = [
       "title" => "Hello world!"
     ];
