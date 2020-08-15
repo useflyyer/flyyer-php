@@ -9,7 +9,7 @@ To create a FLAYYER template please refer to: [flayyer.com](https://flayyer.com?
 This package supports **>= PHP 7.1**.
 
 ```sh
-composer install flayyer/flayyer
+composer require flayyer/flayyer
 ```
 
 ## Usage
