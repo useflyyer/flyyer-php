@@ -10,6 +10,9 @@ This package supports **>= PHP 7.1**.
 
 ```sh
 composer require flayyer/flayyer
+
+# or with a specific version
+composer require flayyer/flayyer:0.1.2
 ```
 
 ## Usage
