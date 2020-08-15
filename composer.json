@@ -1,0 +1,20 @@
+{
+  "name": "flayyer/flayyer-php",
+  "description": "PHP helpers to create FLAYYER URLs ",
+  "keywords": [
+    "flayyer-php",
+    "flayyer",
+    "qs"
+  ],
+  "homepage": "https://github.com/flayyer/flayyer-php",
+  "license": "MIT",
+  "require": {
+    "php": "^7.1"
+  },
+  "require-dev": {
+
+  },
+  "autoload": {
+    "psr-4": {"Flayyer\\": "src/"}
+  }
+}
