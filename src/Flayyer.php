@@ -63,7 +63,7 @@ final class Flayyer
   public function querystring()
   {
     $defaults = ['__v' => round(microtime(true))];
-    if (is_null($this->variables)) {
+    if (empty($this->variables)) {
       return Flayyer::to_query($defaults);
     } else {
       return Flayyer::to_query(array_merge($defaults, $this->variables));
@@ -75,9 +75,9 @@ final class Flayyer
    */
   public function href()
   {
-    if (is_null($this->tenant)) throw new Exception('Missing \'tenant\' property');
-    if (is_null($this->deck)) throw new Exception('Missing \'deck\' property');
-    if (is_null($this->template)) throw new Exception('Missing \'template\' property');
+    if (empty($this->tenant)) throw new Exception('Missing \'tenant\' property');
+    if (empty($this->deck)) throw new Exception('Missing \'deck\' property');
+    if (empty($this->template)) throw new Exception('Missing \'template\' property');
 
     $query = $this->querystring();
     if ($this->version) {
