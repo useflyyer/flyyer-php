@@ -37,7 +37,7 @@ final class Flayyer
     $deck,
     $template,
     $version = null,
-    $extension = "jpeg",
+    $extension = 'jpeg',
     $variables = []
   ) {
     $this->tenant = $tenant;
@@ -51,22 +51,22 @@ final class Flayyer
   /**
    * Stringify variables
    */
-  public static function toQuery($hash)
+  public static function to_query($hash)
   {
     // TODO: add more tests and edge-cases.
     return http_build_query($hash);
   }
 
   /**
-   * Get final querystring with added "__v" param to force crawlers to update the image.
+   * Get final querystring with added '__v' param to force crawlers to update the image.
    */
   public function querystring()
   {
-    $defaults = ["__v" => round(microtime(true))];
+    $defaults = ['__v' => round(microtime(true))];
     if (is_null($this->variables)) {
-      return Flayyer::toQuery($defaults);
+      return Flayyer::to_query($defaults);
     } else {
-      return Flayyer::toQuery(array_merge($defaults, $this->variables));
+      return Flayyer::to_query(array_merge($defaults, $this->variables));
     }
   }
 
@@ -75,9 +75,9 @@ final class Flayyer
    */
   public function href()
   {
-    if (is_null($this->tenant)) throw new Exception("Missing 'tenant' property");
-    if (is_null($this->deck)) throw new Exception("Missing 'deck' property");
-    if (is_null($this->template)) throw new Exception("Missing 'template' property");
+    if (is_null($this->tenant)) throw new Exception('Missing \'tenant\' property');
+    if (is_null($this->deck)) throw new Exception('Missing \'deck\' property');
+    if (is_null($this->template)) throw new Exception('Missing \'template\' property');
 
     $query = $this->querystring();
     if ($this->version) {
