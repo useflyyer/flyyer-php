@@ -81,8 +81,8 @@ final class Flayyer
 
     $query = $this->querystring();
     if ($this->version) {
-      return "https://flayyer.host/v2/{$this->tenant}/{$this->deck}/{$this->template}.{$this->version}.{$this->extension}?{$query}";
+      return "https://flayyer.io/v2/{$this->tenant}/{$this->deck}/{$this->template}.{$this->version}.{$this->extension}?{$query}";
     }
-    return "https://flayyer.host/v2/{$this->tenant}/{$this->deck}/{$this->template}.{$this->extension}?{$query}";
+    return "https://flayyer.io/v2/{$this->tenant}/{$this->deck}/{$this->template}.{$this->extension}?{$query}";
   }
 }

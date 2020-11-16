@@ -24,14 +24,14 @@ final class FlayyerTest extends TestCase
   {
     $flayyer = new Flayyer('tenant', 'deck', 'template');
     $href = $flayyer->href();
-    $this->assertStringStartsWith('https://flayyer.host/v2/tenant/deck/template.jpeg?__v=', $href);
+    $this->assertStringStartsWith('https://flayyer.io/v2/tenant/deck/template.jpeg?__v=', $href);
 
     $flayyer->variables = [
       'title' => 'Hello world!'
     ];
 
     $href = $flayyer->href();
-    $this->assertStringStartsWith('https://flayyer.host/v2/tenant/deck/template.jpeg?__v=', $href);
+    $this->assertStringStartsWith('https://flayyer.io/v2/tenant/deck/template.jpeg?__v=', $href);
     $this->assertStringEndsWith('&title=Hello+world%21', $href);
   }
 
