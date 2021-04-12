@@ -91,4 +91,17 @@ final class FlayyerAITest extends TestCase
     $this->assertEquals(0.9, $payload->params->_res);
     $this->assertEquals("/collections/col", $payload->path);
   }
+
+  public function testEncodesURLWithPathMissingSlashAtStart(): void
+  {
+    $key = 'sg1j0HVy9bsMihJqa8Qwu8ZYgCYHG0tx';
+    $flayyer = new FlayyerAI('project', 'collections/col', ['title' => 'Hello world!'], ['id' => 'dev forgot to slugify'], $key, 'JWT');
+    $matches = array();
+    preg_match('/(jwt-)(.*)(\?)/', $flayyer->href(), $matches);
+    $token = $matches[2];
+    $payload = JWT::decode($token, $key, array('HS256'));
+    $this->assertEquals('dev forgot to slugify', $payload->params->__id);
+    $this->assertEquals('Hello world!', $payload->params->title);
+    $this->assertEquals("/collections/col", $payload->path);
+  }
 }
