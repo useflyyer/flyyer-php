@@ -69,12 +69,14 @@ final class FlayyerAITest extends TestCase
   {
     $key = 'sg1j0HVy9bsMihJqa8Qwu8ZYgCYHG0tx';
     $flayyer = new FlayyerAI('project', '/', [], [], $key, 'JWT');
+    $href = $flayyer->href();
     $matches = array();
-    preg_match('/(jwt-)(.*)(\?)/', $flayyer->href(), $matches);
+    preg_match('/(jwt-)(.*)(\?)/', $href, $matches);
     $token = $matches[2];
     $payload = JWT::decode($token, $key, array('HS256'));
     $this->assertEquals(array(), $payload->params);
     $this->assertEquals("/", $payload->path);
+    $this->assertMatchesRegularExpression('/https:\/\/flayyer.ai\/v2\/project\/jwt-.*\?__v=\d/', $href);
   }
 
   public function testEncodesURLWithJWTWithMeta(): void
