@@ -2,7 +2,7 @@
 
 The AI-powered preview system built from your website (no effort required).
 
-[![Flayyer live image](https://github.com/flayyer/create-flayyer-app/blob/master/.github/assets/website-to-preview.png?raw=true&v=1)](https://flayyer.ai/v2/spikeball-cl/_/_/products/spikeball-hoodie)
+![Flayyer live image](https://github.com/flayyer/create-flayyer-app/blob/master/.github/assets/website-to-preview.png?raw=true&v=1)
 
 **This package is agnostic to any PHP framework.**
 
