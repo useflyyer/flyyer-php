@@ -2,7 +2,7 @@
 
 The AI-powered preview system built from your website (no effort required).
 
-[![Flayyer live image](https://github.com/flayyer/create-flayyer-app/blob/master/.github/assets/website-to-preview.png?raw=true&v=1)](https://flayyer.ai/v2/spikeball-cl/_/products/spikeball-hoodie)
+[![Flayyer live image](https://github.com/flayyer/create-flayyer-app/blob/master/.github/assets/website-to-preview.png?raw=true&v=1)](https://flayyer.ai/v2/spikeball-cl/_/_/products/spikeball-hoodie)
 
 **This package is agnostic to any PHP framework.**
 
@@ -10,7 +10,7 @@ The AI-powered preview system built from your website (no effort required).
 
 - [Get started (5 minutes)](#get-started-5-minutes)
 - [Advanced usage](#advanced-usage)
-- [Flayyer.io - Take control of everything](#flayyerio)
+- [Flayyer.io](#flayyerio)
 - [Development](#development)
 - [Test](#test)
 
@@ -67,7 +67,7 @@ Here you have a detailed full example for project `website-com` and path `/path/
 
 Advanced features include:
 
-- Custom variables: additional information for your preview that is not present in your website.
+- Custom variables: additional information for your preview that is not present in your website. [Note: if you need customization you should take a look at [Flayyer.io](#flayyerio)]
 - Custom metadata: set custom width, height, resolution, and more (see example).
 - Signed URLs.
 
@@ -88,8 +88,8 @@ $flayyer = new FlayyerAI(
     'v' => '12369420123', // specific handler version, by default it's a random number to circumvent platforms' cache,
     'width' => 1200,
     'height' => 600,
-    'resolution' => 0.9,
-    'agent' => 'whatsapp', // this would force a square image
+    'resolution' => 0.9, // from 0.0 to 1.0
+    'agent' => 'whatsapp', // force dimensions for specific platform
   ]);
 
 // Use this image in your <head/> tags (og:image & twitter:image)
@@ -113,12 +113,11 @@ $url = $flayyer->href();
 // > https://flayyer.ai/v2/website-com/jwt-eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJwYXJhbXMiOnsiX19pZCI6ImplYW5zLTEyMyJ9LCJwYXRoIjoiXC9wYXRoXC90b1wvcHJvZHVjdCJ9.X8Vs5SGEA1-3M6bH-h24jhQnbwH95V_G0f-gPhTBTzE?__v=1618283086
 ```
 
-### Flayyer.io - Take control of everything
+### Flayyer.io
 
-As you probably realized, Flayyer.ai uses the [rules defined on your dashboard](https://flayyer.com/dashboard/_/projects) to decide how to handle every image based on path patterns, then fetches and analyse the website for variables and information to render the image. Let's say _"render images based on the content of this route"_.
+As you probably realized, Flayyer.ai uses the [rules defined on your dashboard](https://flayyer.com/dashboard/_/projects) to decide how to handle every image based on path patterns. It fetches and analyse your website for obtaining information and then rendering a content-rich image increasing the click-through-rate with no effort. Let's say _"FlayyerAI render images based on the content of this route"_.
 
-Flayyer.io instead requires you to explicitly declare template and variables for the images to render, giving you more control for customization. Let's say _"render an image with using this template and these explicit variables"_.
-
+Flayyer.io instead requires you to explicitly declare template and variables for the images to render, **giving you more control for customization**. Let's say _"FlayyerIO render an image using this template and these explicit variables"_.
 
 ```php
 $flayyer = new Flayyer("tenant", "deck", "template");
