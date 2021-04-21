@@ -113,7 +113,7 @@ $url = $flayyer->href();
 // > https://flayyer.ai/v2/website-com/jwt-eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJwYXJhbXMiOnsiX19pZCI6ImplYW5zLTEyMyJ9LCJwYXRoIjoiXC9wYXRoXC90b1wvcHJvZHVjdCJ9.X8Vs5SGEA1-3M6bH-h24jhQnbwH95V_G0f-gPhTBTzE?__v=1618283086
 ```
 
-### Flayyer.io
+## Flayyer.io
 
 As you probably realized, Flayyer.ai uses the [rules defined on your dashboard](https://flayyer.com/dashboard/_/projects) to decide how to handle every image based on path patterns. It fetches and analyse your website for obtaining information and then rendering a content-rich image increasing the click-through-rate with no effort. Let's say _"FlayyerAI render images based on the content of this route"_.
 
