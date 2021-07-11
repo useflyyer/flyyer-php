@@ -1,16 +1,20 @@
 {
-  "name": "flayyer/flayyer",
-  "description": "PHP helpers to create FLAYYER URLs",
+  "name": "flyyer/flyyer",
+  "description": "PHP helpers to create FLYYER URLs",
   "keywords": [
-    "flayyer-php",
-    "flayyer",
+    "flyyer-php",
+    "flyyer",
     "qs"
   ],
-  "homepage": "https://github.com/flayyer/flayyer-php",
+  "homepage": "https://github.com/useflyyer/flyyer-php",
   "authors": [
     {
       "name": "Patricio López Juri",
-      "email": "lopezjuripatricio@gmail.com"
+      "email": "patricio@flyyer.io"
+    },
+    {
+      "name": "Franco Méndez Z",
+      "email": "franco@flyyer.io"
     }
   ],
   "license": "MIT",

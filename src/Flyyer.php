@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 use \Firebase\JWT\JWT;
 
-final class FlayyerAI
+final class Flyyer
 {
   /**
    * Required. Your project slug.
@@ -32,7 +32,7 @@ final class FlayyerAI
   public $strategy;
 
   /**
-   * Construct a FLAYYER AI helper object.
+   * Construct a FLYYER AI helper object.
    */
   public function __construct(
     $project,
@@ -93,7 +93,7 @@ final class FlayyerAI
    */
   public function querystring($ignoreV = false)
   {
-    return FlayyerAI::to_query(array_filter($this->params_hash($ignoreV)));
+    return Flyyer::to_query(array_filter($this->params_hash($ignoreV)));
   }
 
   /**
@@ -122,7 +122,7 @@ final class FlayyerAI
   }
 
   /**
-   * Get final FLAYYER AI url. Use this as value (or content) of your <head> tags.
+   * Get final FLYYER AI url. Use this as value (or content) of your <head> tags.
    */
   public function href()
   {
@@ -131,9 +131,9 @@ final class FlayyerAI
     $params = $this->querystring(false);
     $version = $this->meta["v"] ?? round(microtime(true));
     if (is_null($this->strategy) || strtolower($this->strategy) == "hmac") {
-      return "https://flayyer.ai/v2/{$this->project}/{$signature}/{$params}{$this->path_safe()}";
+      return "https://cdn.flyyer.io/v2/{$this->project}/{$signature}/{$params}{$this->path_safe()}";
     } else {
-      return "https://flayyer.ai/v2/{$this->project}/jwt-{$signature}?__v={$version}";
+      return "https://cdn.flyyer.io/v2/{$this->project}/jwt-{$signature}?__v={$version}";
     }
   }
 }

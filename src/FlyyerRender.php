@@ -2,18 +2,18 @@
 
 declare(strict_types=1);
 
-final class Flayyer
+final class FlyyerRender
 {
   /**
-   * Visit https://app.flayyer.com to get this value for your project
+   * Visit https://app.flyyer.io to get this value for your project
    */
   public $tenant;
   /**
-   * Visit https://app.flayyer.com to get this value for your project
+   * Visit https://app.flyyer.io to get this value for your project
    */
   public $deck;
   /**
-   * Visit https://app.flayyer.com to get this value for your project
+   * Visit https://app.flyyer.io to get this value for your project
    */
   public $template;
   /**
@@ -30,7 +30,7 @@ final class Flayyer
   public $variables;
 
   /**
-   * Construct a FLAYYER helper object.
+   * Construct a FLYYER helper object.
    */
   public function __construct(
     $tenant,
@@ -64,14 +64,14 @@ final class Flayyer
   {
     $defaults = ['__v' => round(microtime(true))];
     if (empty($this->variables)) {
-      return Flayyer::to_query($defaults);
+      return FlyyerRender::to_query($defaults);
     } else {
-      return Flayyer::to_query(array_merge($defaults, $this->variables));
+      return FlyyerRender::to_query(array_merge($defaults, $this->variables));
     }
   }
 
   /**
-   * Get final FLAYYER url. Use this as value (or content) of your <head> tags.
+   * Get final FLYYER url. Use this as value (or content) of your <head> tags.
    */
   public function href()
   {
@@ -81,8 +81,8 @@ final class Flayyer
 
     $query = $this->querystring();
     if ($this->version) {
-      return "https://flayyer.io/v2/{$this->tenant}/{$this->deck}/{$this->template}.{$this->version}.{$this->extension}?{$query}";
+      return "https://cdn.flyyer.io/render/v2/{$this->tenant}/{$this->deck}/{$this->template}.{$this->version}.{$this->extension}?{$query}";
     }
-    return "https://flayyer.io/v2/{$this->tenant}/{$this->deck}/{$this->template}.{$this->extension}?{$query}";
+    return "https://cdn.flyyer.io/render/v2/{$this->tenant}/{$this->deck}/{$this->template}.{$this->extension}?{$query}";
   }
 }
