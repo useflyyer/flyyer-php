@@ -4,41 +4,41 @@ declare(strict_types=1);
 
 use PHPUnit\Framework\TestCase;
 
-final class FlayyerTest extends TestCase
+final class FlyyerRenderTest extends TestCase
 {
   public function testCanCreateInstance(): void
   {
-    $flayyer = new Flayyer('tenant', 'deck', 'template');
-    $this->assertInstanceOf(Flayyer::class, $flayyer);
+    $flyyer = new FlyyerRender('tenant', 'deck', 'template');
+    $this->assertInstanceOf(FlyyerRender::class, $flyyer);
   }
 
   public function testThrowsIfMissingArguments(): void
   {
     $this->expectException(Exception::class); // TODO: use InvalidArgumentException?
-    $flayyer = new Flayyer('tenant', 'deck', 'template');
-    $flayyer->tenant = null;
-    $flayyer->href();
+    $flyyer = new FlyyerRender('tenant', 'deck', 'template');
+    $flyyer->tenant = null;
+    $flyyer->href();
   }
 
   public function testEncodesURL(): void
   {
-    $flayyer = new Flayyer('tenant', 'deck', 'template');
-    $href = $flayyer->href();
-    $this->assertStringStartsWith('https://flayyer.io/v2/tenant/deck/template.jpeg?__v=', $href);
+    $flyyer = new FlyyerRender('tenant', 'deck', 'template');
+    $href = $flyyer->href();
+    $this->assertStringStartsWith('https://cdn.flyyer.io/render/v2/tenant/deck/template.jpeg?__v=', $href);
 
-    $flayyer->variables = [
+    $flyyer->variables = [
       'title' => 'Hello world!'
     ];
 
-    $href = $flayyer->href();
-    $this->assertStringStartsWith('https://flayyer.io/v2/tenant/deck/template.jpeg?__v=', $href);
+    $href = $flyyer->href();
+    $this->assertStringStartsWith('https://cdn.flyyer.io/render/v2/tenant/deck/template.jpeg?__v=', $href);
     $this->assertStringEndsWith('&title=Hello+world%21', $href);
   }
 
   public function testCanStringifyHashOfPrimitives(): void
   {
     $hash = ['a' => 'hello', 'b' => 100, 'c' => false, 'd' => null, 'b' => 999];
-    $str = Flayyer::to_query($hash);
+    $str = FlyyerRender::to_query($hash);
     $this->assertEquals($str, 'a=hello&b=999&c=0');
   }
 
@@ -48,7 +48,7 @@ final class FlayyerTest extends TestCase
       'a' => ['aa' => 'bar', 'ab' => 'foo'],
       'b' => [['c' => 'foo'], ['c' => 'bar']],
     ];
-    $str = Flayyer::to_query($hash);
+    $str = FlyyerRender::to_query($hash);
     $this->assertEquals(urldecode($str), 'a[aa]=bar&a[ab]=foo&b[0][c]=foo&b[1][c]=bar');
   }
 }
