@@ -1,6 +1,6 @@
 {
   "name": "flyyer/flyyer",
-  "description": "PHP helpers to create FLYYER URLs",
+  "description": "PHP helpers to create FLYYER image URLs",
   "keywords": [
     "flyyer-php",
     "flyyer",
