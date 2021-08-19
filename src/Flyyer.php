@@ -32,7 +32,7 @@ final class Flyyer
   public $strategy;
 
   /**
-   * Construct a FLYYER AI helper object.
+   * Construct a FLYYER helper object.
    */
   public function __construct(
     $project,
