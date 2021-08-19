@@ -59,6 +59,7 @@ final class FlyyerRenderTest extends TestCase
   public function testEncodesURL(): void
   {
     $flyyer = new FlyyerRender('tenant', 'deck', 'template');
+    $flyyer->extension = "jpeg";
     $href = $flyyer->href();
     $this->assertStringStartsWith('https://cdn.flyyer.io/r/v2/tenant/deck/template.jpeg?__v=', $href);
     $flyyer->variables = [
@@ -66,19 +67,20 @@ final class FlyyerRenderTest extends TestCase
     ];
 
     $href = $flyyer->href();
+
     $this->assertStringStartsWith('https://cdn.flyyer.io/r/v2/tenant/deck/template.jpeg?__v=', $href);
     $this->assertStringEndsWith('&title=Hello+world%21', $href);
   }
 
   public function testEncodesURLWithHmacSignature(): void
   {
-    $flyyer = new FlyyerRender('tenat', 'deck', 'template');
-    $flyyer->variables = ['title' => 'Hello world!'];
+    $flyyer = new FlyyerRender('tenant', 'deck', 'template');
+    $flyyer->variables['title'] = 'Hello world!';
     $flyyer->extension = 'jpeg';
     $flyyer->strategy = 'HMAC';
     $flyyer->secret = 'sg1j0HVy9bsMihJqa8Qwu8ZYgCYHG0tx';
     $href = $flyyer->href();
-    $this->assertMatchesRegularExpression('/https:\/\/cdn.flyyer.io\/r\/v2\/tenant\/deck\/template.jpeg\?__v=\d+&title=Hello\+world%21&__hmac=6b631ae8c4ca2977/', $href);
+    $this->assertMatchesRegularExpression('/https:\/\/cdn.flyyer.io\/r\/v2\/tenant\/deck\/template.jpeg\?__v=\d+&title=Hello\+world%21&__hmac=c2be24edfbc7a57c/', $href);
   }
 
   public function testEncodesURLWithJWTAndDefaultValues(): void
@@ -92,25 +94,20 @@ final class FlyyerRenderTest extends TestCase
     $flyyer->secret = $key;
     $href = $flyyer->href();
     $matches = array();
-    preg_match('/(jwt=)(.*?)(&?)/', $href, $matches);
+    preg_match('/(jwt=)(.*?)(&|$)/', $href, $matches);
     $token = $matches[2];
-    $payload = JWT::decode($token, $key, array('HS256'));
-    $check = [
-      "d"=>"deck",
-      "t"=>"template",
-      "v"=>4,
-      "e"=>"jpeg",
-      "i"=>null,
-      "w"=>null,
-      "h"=>null,
-      "r"=>null,
-      "u"=>null,
-      "var"=>[
-          "title"=>"Hello world!",
-      ]
-    ];
-    $this->assertEquals($payload, $check);
-    $this->assertMatchesRegularExpression('/https:\/\/cdn.flyyer.io\/r\/v2\/tenant\?__jwt=.*\?__v=\d+/', $href);
+    $decoded = JWT::decode($token, $key, array('HS256'));
+    $this->assertEquals($decoded->d, 'deck');
+    $this->assertEquals($decoded->t, 'template');
+    $this->assertEquals($decoded->v, 4);
+    $this->assertEquals($decoded->e, 'jpeg');
+    $this->assertEquals($decoded->i, null);
+    $this->assertEquals($decoded->w, null);
+    $this->assertEquals($decoded->h, null);
+    $this->assertEquals($decoded->r, null);
+    $this->assertEquals($decoded->u, null);
+    $this->assertEquals($decoded->var->title, 'Hello world!');
+    $this->assertMatchesRegularExpression('/https:\/\/cdn.flyyer.io\/r\/v2\/tenant\?__jwt=.*&__v=\d+/', $href);
   }
 
   public function testEncodesURLWithJWTWithMeta(): void
@@ -127,24 +124,18 @@ final class FlyyerRenderTest extends TestCase
     $flyyer->secret = $key;
     $href = $flyyer->href();
     $matches = array();
-    preg_match('/(jwt=)(.*?)(&?)/', $href, $matches);
+    preg_match('/(jwt=)(.*?)(&|$)/', $href, $matches);
     $token = $matches[2];
-    $payload = JWT::decode($token, $key, array('HS256'));
-    $check = [
-      "d"=>"deck",
-      "t"=>"template",
-      "v"=>4,
-      "e"=>"jpeg",
-      "i"=>null,
-      "w"=>null,
-      "h"=>null,
-      "r"=>null,
-      "u"=>null,
-      "var"=>[
-          "title"=>"Hello world!",
-      ]
-    ];
-    $this->assertEquals($payload, $check);
-    $this->assertMatchesRegularExpression('/https:\/\/cdn.flyyer.io\/r\/v2\/tenant\?__jwt=.*\?__v=\d+/', $href);
+    $decoded = JWT::decode($token, $key, array('HS256'));
+    $this->assertEquals($decoded->d, 'deck');
+    $this->assertEquals($decoded->t, 'template');
+    $this->assertEquals($decoded->v, null);
+    $this->assertEquals($decoded->e, null);
+    $this->assertEquals($decoded->i, 'dev forgot to slugify');
+    $this->assertEquals($decoded->w, '100');
+    $this->assertEquals($decoded->h, 200);
+    $this->assertEquals($decoded->r, null);
+    $this->assertEquals($decoded->u, 'whatsapp');
+    $this->assertMatchesRegularExpression('/https:\/\/cdn.flyyer.io\/r\/v2\/tenant\?__jwt=.*&__v=\d+/', $href);
   }
 }
