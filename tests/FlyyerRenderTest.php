@@ -80,7 +80,7 @@ final class FlyyerRenderTest extends TestCase
     $flyyer->strategy = 'HMAC';
     $flyyer->secret = 'sg1j0HVy9bsMihJqa8Qwu8ZYgCYHG0tx';
     $href = $flyyer->href();
-    $this->assertMatchesRegularExpression('/https:\/\/cdn.flyyer.io\/r\/v2\/tenant\/deck\/template.jpeg\?__v=\d+&title=Hello\+world%21&__hmac=c2be24edfbc7a57c/', $href);
+    $this->assertMatchesRegularExpression('/https:\/\/cdn.flyyer.io\/r\/v2\/tenant\/deck\/template.jpeg\?__v=\d+&title=Hello\+world%21&__hmac=6b631ae8c4ca2977/', $href);
   }
 
   public function testEncodesURLWithJWTAndDefaultValues(): void

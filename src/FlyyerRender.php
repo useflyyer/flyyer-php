@@ -93,7 +93,7 @@ final class FlyyerRender
     if ($this->strategy && $this->secret) {
       $key = $this->secret;
       if (strtolower($this->strategy) === 'hmac') {
-        $default_query = FlyyerRender::to_query($defaults);
+        $default_query = FlyyerRender::to_query(array_merge($defaults, $this->variables));
         $data = implode('#', [$this->deck, $this->template, $this->version ?: "", $this->extension ?: "", $default_query]);
         $__hmac = substr(hash_hmac('sha256', $data, $key), 0, 16);
         return FlyyerRender::to_query(array_merge($defaults, $default_v, $this->variables, ['__hmac' => $__hmac]));
