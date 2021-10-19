@@ -30,6 +30,10 @@ final class Flyyer
    * Optional. Possible values are `HMAC` or `JWT` depending on which signature strategy you want.
    */
   public $strategy;
+  /**
+   * Optional. Relative or absolute URL for default image (equivalent to <meta property="flyyer:default" /> but more efficient)
+   */
+  public $default;
 
   /**
    * Construct a FLYYER helper object.
@@ -40,7 +44,8 @@ final class Flyyer
     $variables = [],
     $meta = [],
     $secret = null,
-    $strategy = null
+    $strategy = null,
+    $default = null
   ) {
     $this->project = $project;
     $this->path = $path;
@@ -48,6 +53,7 @@ final class Flyyer
     $this->meta = $meta;
     $this->secret = $secret;
     $this->strategy = $strategy;
+    $this->default = $default;
   }
 
   /**
@@ -74,18 +80,32 @@ final class Flyyer
    */
   public function params_hash($ignoreV)
   {
-    $defaults = [
-      "__v" => $this->meta["v"] ?: round(microtime(true)),
-      "__id" => $this->meta["id"] ?: null,
-      "_w" => $this->meta["width"] ?: null,
-      "_h" => $this->meta["height"] ?: null,
-      "_res" => $this->meta["resolution"] ?: null,
-      "_ua" => $this->meta["agent"] ?: null,
-    ];
-    if ($ignoreV) {
-      unset($defaults["__v"]);
+    if ($this->strategy and strtolower($this->strategy) == "jwt") {
+      $jwt_defaults = [
+        "i" => $this->meta["id"] ?: null,
+        "w" => $this->meta["width"] ?: null,
+        "h" => $this->meta["height"] ?: null,
+        "r" => $this->meta["resolution"] ?: null,
+        "u" => $this->meta["agent"] ?: null,
+        "def" => $this->default,
+        "var" => $this->variables
+      ];
+      return $jwt_defaults;
+    } else {
+      $defaults = [
+        "__v" => $this->meta["v"] ?: round(microtime(true)),
+        "__id" => $this->meta["id"] ?: null,
+        "_w" => $this->meta["width"] ?: null,
+        "_h" => $this->meta["height"] ?: null,
+        "_res" => $this->meta["resolution"] ?: null,
+        "_ua" => $this->meta["agent"] ?: null,
+        "_def" => $this->default ?: null,
+      ];
+      if ($ignoreV) {
+        unset($defaults["__v"]);
+      }
+      return array_merge($defaults, $this->variables);
     }
-    return array_merge($defaults, $this->variables);
   }
 
   /**
