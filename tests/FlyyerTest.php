@@ -87,10 +87,10 @@ final class FlyyerTest extends TestCase
     preg_match('/(jwt-)(.*)(\?)/', $flyyer->href(), $matches);
     $token = $matches[2];
     $payload = JWT::decode($token, $key, array('HS256'));
-    $this->assertEquals('dev forgot to slugify', $payload->params->__id);
-    $this->assertEquals('100', $payload->params->_w);
-    $this->assertEquals(200, $payload->params->_h);
-    $this->assertEquals(0.9, $payload->params->_res);
+    $this->assertEquals('dev forgot to slugify', $payload->params->i);
+    $this->assertEquals('100', $payload->params->w);
+    $this->assertEquals(200, $payload->params->h);
+    $this->assertEquals(0.9, $payload->params->r);
     $this->assertEquals("/collections/col", $payload->path);
   }
 
@@ -102,8 +102,8 @@ final class FlyyerTest extends TestCase
     preg_match('/(jwt-)(.*)(\?)/', $flyyer->href(), $matches);
     $token = $matches[2];
     $payload = JWT::decode($token, $key, array('HS256'));
-    $this->assertEquals('dev forgot to slugify', $payload->params->__id);
-    $this->assertEquals('Hello world!', $payload->params->title);
+    $this->assertEquals('dev forgot to slugify', $payload->params->i);
+    $this->assertEquals('Hello world!', $payload->params->var->title);
     $this->assertEquals("/collections/col", $payload->path);
   }
 }
