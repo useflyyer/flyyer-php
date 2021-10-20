@@ -106,4 +106,47 @@ final class FlyyerTest extends TestCase
     $this->assertEquals('Hello world!', $payload->params->var->title);
     $this->assertEquals("/collections/col", $payload->path);
   }
+
+  public function testEncodesURLWithJWTAndDefaultImageRelative(): void
+  {
+    $key = 'sg1j0HVy9bsMihJqa8Qwu8ZYgCYHG0tx';
+    $flyyer = new Flyyer('project', 'collections/2', [], [], $key, 'JWT');
+    $flyyer->default = "/static/logo.png";
+    $href = $flyyer->href();
+    $matches = array();
+    preg_match('/(jwt-)(.*)(\?)/', $href, $matches);
+    $token = $matches[2];
+    $payload = JWT::decode($token, $key, array('HS256'));
+    $this->assertEquals("/static/logo.png", $payload->params->def);
+    $this->assertEquals("/collections/2", $payload->path);
+    $this->assertMatchesRegularExpression('/https:\/\/cdn.flyyer.io\/v2\/project\/jwt-.*\?__v=\d/', $href);
+  }
+
+  public function testEncodesURLWithJWTAndDefaultImageAbsolute(): void
+  {
+    $key = 'sg1j0HVy9bsMihJqa8Qwu8ZYgCYHG0tx';
+    $flyyer = new Flyyer('project', 'collections/2', [], [], $key, 'JWT');
+    $flyyer->default = "https://flyyer.io/img/logo.png";
+    $href = $flyyer->href();
+    $matches = array();
+    preg_match('/(jwt-)(.*)(\?)/', $href, $matches);
+    $token = $matches[2];
+    $payload = JWT::decode($token, $key, array('HS256'));
+    $this->assertEquals("https://flyyer.io/img/logo.png", $payload->params->def);
+    $this->assertEquals("/collections/2", $payload->path);
+    $this->assertMatchesRegularExpression('/https:\/\/cdn.flyyer.io\/v2\/project\/jwt-.*\?__v=\d/', $href);
+  }
+
+  public function testThrowsWithInvalidJWTKey(): void
+  {
+    $key1 = 'sg1j0HVy9bsMihJqa8Qwu8ZYgCYHG0tx';
+    $key2 = 'sg1j0HVy9bsMihJqa8Qwu8ZYgCYHG0ty';
+    $flyyer = new Flyyer('project', 'collections/2', [], [], $key1, 'JWT');
+    $href = $flyyer->href();
+    $matches = array();
+    preg_match('/(jwt-)(.*)(\?)/', $href, $matches);
+    JWT::decode($matches[2], $key1, array('HS256'));
+    $this->expectException("Firebase\JWT\SignatureInvalidException");
+    JWT::decode($matches[2], $key2, array('HS256'));
+  }
 }
