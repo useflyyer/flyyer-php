@@ -37,10 +37,13 @@ $flyyer = new Flyyer(
   // The current path of your website
   '/path/to/product', // in Laravel 6 you can use `Route::getCurrentRoute()->getName()`
 );
+// (Optional, Recommended) Default or main image for each page
+$flyyer->default = "/static/image-1.png" # or https://your-site.com/static/image-1.png
+
 
 // Check:
 print($flyyer->href());
-// > https://cdn.flyyer.io/v2/website-com/_/__v=1618281823/path/to/product
+// > https://cdn.flyyer.io/v2/website-com/_/__v=1618281823&_def=%2Fstatic%2Fimage-1.png/path/to/product
 ```
 
 ### 3. Put your smart image link in your `<head>` tags
