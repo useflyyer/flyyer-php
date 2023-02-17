@@ -20,7 +20,7 @@
   "license": "MIT",
   "require": {
     "php": "^7.1",
-    "firebase/php-jwt": "^5.2"
+    "firebase/php-jwt": "^6.0"
   },
   "scripts": {
     "test": "phpunit tests"
